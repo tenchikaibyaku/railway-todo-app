@@ -5,7 +5,7 @@ const cookie = new Cookies();
 
 const initialState = {
   isSignIn: cookie.get("token") !== undefined
-}
+};
 
 export const authSlice = createSlice({
   name: "auth",
