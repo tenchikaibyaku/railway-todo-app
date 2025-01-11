@@ -1,0 +1,7 @@
+@import './styles/variables';
+
+.App {
+  font-family: $font-family;
+  background-color: $secondary-color;
+  color: $primary-color;
+}
