@@ -13,7 +13,9 @@ export const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies] = useCookies();
+
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
+
   useEffect(() => {
     axios
       .get(`${url}/lists`, {
@@ -30,28 +32,16 @@ export const Home = () => {
   }, []);
 
   useEffect(() => {
-    const listId = lists[0]?.id;
-    if (typeof listId !== 'undefined') {
+    if (lists.length > 0) {
+      const listId = lists[0]?.id;
       setSelectListId(listId);
-      axios
-        .get(`${url}/lists/${listId}/tasks`, {
-          headers: {
-            authorization: `Bearer ${cookies.token}`,
-          },
-        })
-        .then((res) => {
-          setTasks(res.data.tasks);
-        })
-        .catch((err) => {
-          setErrorMessage(`タスクの取得に失敗しました。${err}`);
-        });
+      fetchTasks(listId);
     }
   }, [lists]);
 
-  const handleSelectList = (id) => {
-    setSelectListId(id);
+  const fetchTasks = (listId) => {
     axios
-      .get(`${url}/lists/${id}/tasks`, {
+      .get(`${url}/lists/${listId}/tasks`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
@@ -63,6 +53,12 @@ export const Home = () => {
         setErrorMessage(`タスクの取得に失敗しました。${err}`);
       });
   };
+
+  const handleSelectList = (id) => {
+    setSelectListId(id);
+    fetchTasks(id);
+  };
+
   return (
     <div>
       <Header />
@@ -82,7 +78,7 @@ export const Home = () => {
               </p>
             </div>
           </div>
-          <ul className="list-tab">
+          <ul className="list-tab" role="tablist">
             {lists.map((list, key) => {
               const isActive = list.id === selectListId;
               return (
@@ -90,6 +86,14 @@ export const Home = () => {
                   key={key}
                   className={`list-tab-item ${isActive ? 'active' : ''}`}
                   onClick={() => handleSelectList(list.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      handleSelectList(list.id);
+                    }
+                  }}
+                  role="tab"
+                  aria-selected={isActive}
+                  tabIndex={0} // フォーカス可能にする
                 >
                   {list.title}
                 </li>
@@ -102,7 +106,9 @@ export const Home = () => {
               <Link to="/task/new">タスク新規作成</Link>
             </div>
             <div className="display-select-wrapper">
+              <label htmlFor="display-select">表示切替:</label>
               <select
+                id="display-select"
                 onChange={handleIsDoneDisplayChange}
                 className="display-select"
               >
@@ -127,47 +133,23 @@ const Tasks = (props) => {
   const { tasks, selectListId, isDoneDisplay } = props;
   if (tasks === null) return <></>;
 
-  if (isDoneDisplay == 'done') {
-    return (
-      <ul>
-        {tasks
-          .filter((task) => {
-            return task.done === true;
-          })
-          .map((task, key) => (
-            <li key={key} className="task-item">
-              <Link
-                to={`/lists/${selectListId}/tasks/${task.id}`}
-                className="task-item-link"
-              >
-                {task.title}
-                <br />
-                {task.done ? '完了' : '未完了'}
-              </Link>
-            </li>
-          ))}
-      </ul>
-    );
-  }
+  const filteredTasks = tasks.filter(
+    (task) => task.done === (isDoneDisplay === 'done')
+  );
 
   return (
-    <ul>
-      {tasks
-        .filter((task) => {
-          return task.done === false;
-        })
-        .map((task, key) => (
-          <li key={key} className="task-item">
-            <Link
-              to={`/lists/${selectListId}/tasks/${task.id}`}
-              className="task-item-link"
-            >
-              {task.title}
-              <br />
-              {task.done ? '完了' : '未完了'}
-            </Link>
-          </li>
-        ))}
+    <ul className="task-list">
+      {filteredTasks.map((task, key) => (
+        <li key={key} className="task-item">
+          <Link
+            to={`/lists/${selectListId}/tasks/${task.id}`}
+            className="task-item-link"
+          >
+            <div>{task.title}</div>
+            <div>{task.done ? '完了' : '未完了'}</div>
+          </Link>
+        </li>
+      ))}
     </ul>
   );
 };
