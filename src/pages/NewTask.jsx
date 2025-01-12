@@ -1,27 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
-import axios from 'axios';
-import { url } from '../const';
-import { Header } from '../components/Header';
-import './newTask.scss';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import { url } from "../const";
+import { Header } from "../components/Header";
+import { useNavigate } from "react-router-dom";
+import "./newTask.scss";
 
 export const NewTask = () => {
   const [selectListId, setSelectListId] = useState();
   const [lists, setLists] = useState([]);
-  const [title, setTitle] = useState('');
-  const [detail, setDetail] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [title, setTitle] = useState("");
+  const [detail, setDetail] = useState("");
+  const [limit, setLimit] = useState(""); // 期限を追加
+  const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
   const navigate = useNavigate();
+
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
+  const handleLimitChange = (e) => setLimit(e.target.value);
   const handleSelectList = (id) => setSelectListId(id);
+
   const onCreateTask = () => {
     const data = {
       title: title,
       detail: detail,
       done: false,
+      limit: new Date(limit).toISOString(), // ISOフォーマットに変換
     };
 
     axios
@@ -31,7 +36,7 @@ export const NewTask = () => {
         },
       })
       .then(() => {
-        navigate('/');
+        navigate("/");
       })
       .catch((err) => {
         setErrorMessage(`タスクの作成に失敗しました。${err}`);
@@ -61,35 +66,51 @@ export const NewTask = () => {
         <h2>タスク新規作成</h2>
         <p className="error-message">{errorMessage}</p>
         <form className="new-task-form">
-          <label>リスト</label>
-          <br />
-          <select
-            onChange={(e) => handleSelectList(e.target.value)}
-            className="new-task-select-list"
-          >
-            {lists.map((list, key) => (
-              <option key={key} className="list-item" value={list.id}>
-                {list.title}
-              </option>
-            ))}
-          </select>
-          <br />
-          <label>タイトル</label>
-          <br />
-          <input
-            type="text"
-            onChange={handleTitleChange}
-            className="new-task-title"
-          />
-          <br />
-          <label>詳細</label>
-          <br />
-          <textarea
-            type="text"
-            onChange={handleDetailChange}
-            className="new-task-detail"
-          />
-          <br />
+          <div className="form-group">
+            <label htmlFor="new-task-list">リスト</label>
+            <select
+              id="new-task-list"
+              name="list"
+              onChange={(e) => handleSelectList(e.target.value)}
+              className="new-task-select-list"
+            >
+              {lists.map((list, key) => (
+                <option key={key} className="list-item" value={list.id}>
+                  {list.title}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="new-task-title">タイトル</label>
+            <input
+              id="new-task-title"
+              name="title"
+              type="text"
+              onChange={handleTitleChange}
+              className="new-task-title"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="new-task-detail">詳細</label>
+            <textarea
+              id="new-task-detail"
+              name="detail"
+              onChange={handleDetailChange}
+              className="new-task-detail"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="new-task-limit">期限</label>
+            <input
+              id="new-task-limit"
+              name="limit"
+              type="datetime-local"
+              onChange={handleLimitChange}
+              value={limit}
+              className="new-task-limit"
+            />
+          </div>
           <button
             type="button"
             className="new-task-button"
