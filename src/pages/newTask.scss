@@ -1,33 +1,80 @@
-@charset "utf-8";
-
 .new-task {
-  width: 1000px;
+  max-width: 600px;
   margin: 0 auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.new-task h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
 }
 
 .new-task-form {
-  color: #555555;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.new-task-select-list,
-.new-task-title,
-.new-task-detail {
-  width: 300px;
-  margin-bottom: 25px;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.new-task-detail {
-  height: 200px;
+.form-group label {
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
 }
 
 .new-task-button {
-  background-color: #242f9b;
-  color: #ffffff;
-  width: 80px;
-  height: 40px;
+  padding: 12px 25px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
   border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.new-task-button:hover {
+  background-color: #0056b3;
 }
 
 .error-message {
-  color: #ff3333;
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .new-task {
+    padding: 15px;
+  }
+
+  .new-task-button {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
 }

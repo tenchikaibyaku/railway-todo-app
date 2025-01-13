@@ -11,7 +11,7 @@ export const NewTask = () => {
   const [lists, setLists] = useState([]);
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
-  const [limit, setLimit] = useState(''); // 期限を追加
+  const [limit, setLimit] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies] = useCookies();
   const navigate = useNavigate();
@@ -23,10 +23,10 @@ export const NewTask = () => {
 
   const onCreateTask = () => {
     const data = {
-      title: title,
-      detail: detail,
+      title,
+      detail,
       done: false,
-      limit: new Date(limit).toISOString(), // ISOフォーマットに変換
+      limit: new Date(limit).toISOString(),
     };
 
     axios
