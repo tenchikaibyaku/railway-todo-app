@@ -81,18 +81,19 @@ export const EditList = () => {
           <br />
           <button
             type="button"
-            className="delete-list-button"
-            onClick={onDeleteList}
-          >
-            削除
-          </button>
-          <button
-            type="button"
             className="edit-list-button"
             onClick={onUpdateList}
           >
             更新
           </button>
+          <button
+            type="button"
+            className="delete-list-button"
+            onClick={onDeleteList}
+          >
+            削除
+          </button>
+         
         </form>
       </main>
     </div>
