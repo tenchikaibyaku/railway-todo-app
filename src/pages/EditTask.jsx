@@ -89,7 +89,9 @@ export const EditTask = () => {
         if (task.limit) {
           const localDate = new Date(task.limit);
           const offset = localDate.getTimezoneOffset() * 60000; // ミリ秒単位のオフセット
-          const localTime = new Date(localDate.getTime() - offset).toISOString().slice(0, 16);
+          const localTime = new Date(localDate.getTime() - offset)
+            .toISOString()
+            .slice(0, 16);
           setLimit(localTime);
         } else {
           setLimit('');
@@ -163,10 +165,18 @@ export const EditTask = () => {
           </div>
 
           <div className="button-group">
-            <button type="button" onClick={onUpdateTask} className="btn btn-primary">
+            <button
+              type="button"
+              onClick={onUpdateTask}
+              className="btn btn-primary"
+            >
               更新
             </button>
-            <button type="button" onClick={onDeleteTask} className="btn btn-danger">
+            <button
+              type="button"
+              onClick={onDeleteTask}
+              className="btn btn-danger"
+            >
               削除
             </button>
           </div>

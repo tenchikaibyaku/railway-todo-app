@@ -93,7 +93,6 @@ export const EditList = () => {
           >
             削除
           </button>
-         
         </form>
       </main>
     </div>
