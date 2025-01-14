@@ -1,3 +1,5 @@
+@charset "utf-8";
+
 .edit-task {
   max-width: 600px;
   margin: 0 auto;
@@ -5,6 +7,14 @@
   background: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
+
+  @media (max-width: 320px) {
+    padding: 10px;
+  }
 }
 
 .edit-task h2 {
@@ -23,49 +33,52 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
 
-.form-group label {
-  font-weight: bold;
-  color: #555;
-}
+  label {
+    font-weight: bold;
+    color: #555;
+  }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
 
-.form-group textarea {
-  resize: vertical;
-  min-height: 120px;
+    @media (max-width: 768px) {
+      padding: 10px;
+    }
+
+    @media (max-width: 320px) {
+      padding: 8px;
+      font-size: 14px;
+    }
+  }
 }
 
 .status-group {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
 
-.status-group input[type='radio'] {
-  margin-right: 5px;
-}
-
-.status-group label {
-  font-weight: bold;
-  color: #555;
-  display: flex;
-  align-items: center;
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 }
 
 .button-group {
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 .btn {
@@ -99,15 +112,12 @@
   font-size: 14px;
   text-align: center;
   margin-bottom: 15px;
-}
 
-@media (max-width: 768px) {
-  .edit-task {
-    padding: 15px;
+  @media (max-width: 768px) {
+    font-size: 12px;
   }
 
-  .button-group {
-    flex-direction: column;
-    gap: 10px;
+  @media (max-width: 320px) {
+    font-size: 10px;
   }
 }

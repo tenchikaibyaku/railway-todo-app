@@ -53,8 +53,10 @@ body {
 }
 
 /* タスク一覧 */
-.tasks {
-  margin-top: 20px;
+.tasks ul {
+  list-style: none;
+  margin: 8px auto;
+  padding: 0;
 }
 
 .task-item {

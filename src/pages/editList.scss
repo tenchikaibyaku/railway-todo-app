@@ -3,6 +3,15 @@
 .edit-list {
   width: 1000px;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+
+  @media (max-width: 320px) {
+    width: 100%;
+    padding: 10px;
+  }
 }
 
 .edit-list-form {
@@ -12,15 +21,42 @@
 .edit-list-title {
   width: 300px;
   margin-bottom: 25px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
+  @media (max-width: 320px) {
+    width: 100%;
+    font-size: 14px;
+  }
 }
 
 .delete-list-button {
-  color: #ff3333;
-  border: solid 1px #ff3333;
+  color: #ffffff; 
+  background-color: #dc3545;
+  border: none;
   width: 80px;
   height: 40px;
   margin: 25px 5px;
   border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #cc0000; /* ホバー時の色変更 */
+  }
+
+  @media (max-width: 768px) {
+    width: 70px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 320px) {
+    width: 60px;
+    height: 30px;
+    font-size: 12px;
+  }
 }
 
 .edit-list-button {
@@ -29,8 +65,29 @@
   width: 80px;
   height: 40px;
   border-radius: 5px;
+
+  @media (max-width: 768px) {
+    width: 70px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 320px) {
+    width: 60px;
+    height: 30px;
+    font-size: 12px;
+  }
 }
 
 .error-message {
   color: #ff3333;
+  font-size: 14px;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 320px) {
+    font-size: 10px;
+  }
 }
