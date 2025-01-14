@@ -10,7 +10,6 @@ const calculateRemainingTime = (deadline) => {
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-  // 分を正確に計算し、切り上げる
   const minutes = Math.ceil((diff % (1000 * 60 * 60)) / (1000 * 60));
 
   return `${days}日 ${hours}時間 ${minutes}分`;
