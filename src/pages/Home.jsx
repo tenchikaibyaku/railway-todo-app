@@ -128,11 +128,42 @@ export const Home = () => {
   );
 };
 
-// 表示するタスク
 const Tasks = (props) => {
   const { tasks, selectListId, isDoneDisplay } = props;
+
+  // 期限日時を "YYYY-MM-DD HH:mm" 形式にフォーマットする関数
+  const formatDeadline = (deadline) => {
+    if (!deadline) return '未設定';
+    const date = new Date(deadline);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 月は0始まりなので +1
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  };
+
+  // 残り時間を計算する関数
+  const calculateRemainingTime = (deadline) => {
+    if (!deadline) return '期限未設定';
+    const now = new Date();
+    const deadlineDate = new Date(deadline);
+    const diff = deadlineDate - now;
+
+    if (diff <= 0) return '期限切れ';
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    return `${days}日 ${hours}時間 ${minutes}分`;
+  };
+
   if (tasks === null) return <></>;
 
+  // 完了・未完了のタスクを切り替え表示
   const filteredTasks = tasks.filter(
     (task) => task.done === (isDoneDisplay === 'done')
   );
@@ -145,7 +176,15 @@ const Tasks = (props) => {
             to={`/lists/${selectListId}/tasks/${task.id}`}
             className="task-item-link"
           >
-            <div>{task.title}</div>
+            <div>
+              <strong>タイトル:</strong> {task.title}
+            </div>
+            <div>
+              <strong>期限:</strong> {formatDeadline(task.limit)}
+            </div>
+            <div>
+              <strong>残り時間:</strong> {calculateRemainingTime(task.limit)}
+            </div>
             <div>{task.done ? '完了' : '未完了'}</div>
           </Link>
         </li>
@@ -153,3 +192,5 @@ const Tasks = (props) => {
     </ul>
   );
 };
+
+
