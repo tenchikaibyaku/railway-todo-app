@@ -39,11 +39,13 @@ export const SignIn = () => {
       <main className="signin">
         <h2>サインイン</h2>
         <p className="error-message">{errorMessage}</p>
-        <form className="signin-form">
+        <form className="signin-form" autoComplete='on'>
           <label className="email-label">メールアドレス</label>
           <br />
           <input
             type="email"
+            name="username"
+            autoComplete="username"
             className="email-input"
             onChange={handleEmailChange}
           />
@@ -52,6 +54,8 @@ export const SignIn = () => {
           <br />
           <input
             type="password"
+            name="password"
+            autoComplete="current-password"
             className="password-input"
             onChange={handlePasswordChange}
           />
